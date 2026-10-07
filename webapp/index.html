@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Карточка с рынка</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main id="app">
+
+  <!-- Шаг 1: ввод -->
+  <section id="screen-input" class="screen">
+    <h1>Новый товар</h1>
+    <p class="hint" id="status-line"></p>
+
+    <label class="field">
+      <span>Фото товара</span>
+      <input id="photos" type="file" accept="image/*" capture="environment" multiple>
+    </label>
+    <div id="thumbs" class="thumbs"></div>
+
+    <label class="field">
+      <span>Заметка</span>
+      <textarea id="note" rows="3" placeholder="Например: футболка хлопок, S-XL, 4 цвета"></textarea>
+    </label>
+
+    <label class="field">
+      <span>Закупочная цена, ₽</span>
+      <input id="purchase_price" type="number" inputmode="decimal" min="0" step="1" placeholder="350">
+    </label>
+
+    <button id="btn-build" class="primary">Собрать карточку</button>
+  </section>
+
+  <!-- Шаг 2: превью -->
+  <section id="screen-preview" class="screen hidden">
+    <h1>Проверьте карточку</h1>
+    <p class="hint warn" id="uncertainties"></p>
+
+    <div id="preview-images" class="thumbs selectable"></div>
+    <p class="hint">Нажмите на фото, чтобы исключить его из карточки.</p>
+
+    <label class="field"><span>Название</span><input id="f-title" type="text"></label>
+
+    <label class="field"><span>Категория</span><select id="f-category"></select></label>
+
+    <label class="field"><span>Коллекции</span><select id="f-collections" multiple size="3"></select></label>
+
+    <div class="row">
+      <label class="field"><span>Закупка, ₽</span><input id="f-purchase" type="number" inputmode="decimal" min="0"></label>
+      <label class="field"><span>Розница, ₽</span><input id="f-retail" type="number" inputmode="decimal" min="0"></label>
+      <label class="field"><span>Остаток</span><input id="f-qty" type="number" inputmode="numeric" min="0"></label>
+    </div>
+    <p class="hint">Артикул: <span id="f-sku"></span></p>
+
+    <label class="field"><span>Описание (HTML)</span><textarea id="f-description" rows="8"></textarea></label>
+
+    <label class="field">
+      <span>Правка для Claude</span>
+      <div class="row">
+        <input id="correction" type="text" placeholder="например: это детская модель, цвет синий">
+        <button id="btn-revise" class="secondary">Пересобрать</button>
+      </div>
+    </label>
+
+    <button id="btn-publish" class="primary">Опубликовать в InSales</button>
+    <button id="btn-cancel" class="secondary">Отменить</button>
+  </section>
+
+  <!-- Шаг 3: результат -->
+  <section id="screen-done" class="screen hidden">
+    <h1 id="done-title">Готово</h1>
+    <p id="done-text"></p>
+    <a id="done-link" class="link" target="_blank" rel="noopener"></a>
+    <button id="btn-another" class="primary">Следующий товар</button>
+  </section>
+
+  <div id="overlay" class="overlay hidden"><div class="spinner"></div><p id="overlay-text"></p></div>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
